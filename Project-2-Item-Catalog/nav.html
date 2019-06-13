@@ -1,0 +1,28 @@
+  <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{{url_for('showCatalog')}}">Item Catalog App</a>
+        </div>
+
+        <ul class="nav navbar-nav navbar-right">
+          {% if 'username' in session %}
+          <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  <img src="{{ session['picture'] }}"
+                  alt="Profile Picture" style="height: 30px; width: 30px;">
+              </a>
+              <div class="dropdown-menu">
+                  <p class="dropdown-item">Logged in as <strong>{{ session['username'] }}</strong></p>
+                  <hr>
+                  <a class="dropdown-item" href="{{ url_for('gdisconnect') }}">
+                  <span class="glyphicon glyphicon-log-out"></span>Log out</a>
+              </div>
+            </li>
+            </ul>
+           {% else %}
+           <li><a href="{{url_for('login')}}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          {% endif %}
+          
+        </ul>
+      </div>
+    </nav>

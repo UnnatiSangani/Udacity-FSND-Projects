@@ -1,0 +1,45 @@
+{% extends "index.html" %}
+{% include "nav.html" %}
+{% block content %}
+
+<!-- Page Content -->
+
+<div class="fluid-container">
+<div class="row">
+
+    <div class="col-sm-6">
+
+<h1>Edit Category</h1>
+
+
+<form method="POST">
+    <div class="form-group">
+    <label for="name">Current Category Name:</label>
+    <input type="text" size="50" name="current_name" class="form-control" value="{{category.name}}">
+    </div>
+
+    <div class="form-group">
+    <label for="name">New Category Name:</label>
+    <input type="text" size="50" name="name" class="form-control" value="{{category.name}}">
+    </div>
+
+    <div class="form-group">
+    <button type="submit" id="submit" class="btn btn-primary">
+    Save
+    </button>
+
+    <a href="{{url_for('showCatalog')}}">
+    <button type="button" class="btn btn-danger">Cancel</button>
+    </a>
+    </div>
+    
+    </div>
+</form>
+
+</div>
+
+</div>
+<!-- end row -->
+</div>
+<!-- /.container -->
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "index.html" %}
+
+{% block title %}Catalog{% endblock title %}
+
+{% block content %}
+{% include "nav.html" %}
+{% include "flash.html" %}
+
+
+<!-- Page Content -->
+
+<div class="fluid-container">
+        <div class="row">
+
+        <div class="col-sm-6">
+            {% if 'username' in session %}
+            <a href="{{url_for('addCategory')}}">Add Category</a>
+            {% endif %}
+
+            <h2>Category</h2>
+            {% for c in categories %}
+            <div class="list-group">
+                <p><a class="list-group-item" href = "{{url_for('showCategory', category_name = c.name)}}">
+                {{ c.name }} 
+                </a>
+            </p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="col-sm-6">
+            {% if 'username' in session %}
+            <a href="{{url_for('addItem')}}">Add Item</a>
+            {% endif %}
+
+            <h2>Latest Items</h2>
+            {% for i in items %}
+            <div class="list-group">
+            <p><strong><a href = "{{url_for('showItemDescription', category_name=i.category.name, item_name=i.name)}}"> 
+                {{ i.name }} </strong>
+            </a> ({{ i.category.name }})
+            </p>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div><!-- /row-->
+    </div>
+    <!-- /.container -->
+    
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+
+{% block title %}Item Details{% endblock title %}
+
+{% block content %}
+{% include "nav.html" %}
+{% include "flash.html" %}
+
+<!-- Page Content -->
+
+<div class="fluid-container">
+
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>{{ category.name }}</h2>
+            
+            <ul class="list-group">
+            <li class="list-group-item">{{ item.name }}</li>                   
+            <li class="list-group-item">Description: {{ item.description }}</li>
+
+            {% if 'username' in session %}
+            <p><a href="{{url_for('editItem', category_name=category.name, item_name=item.name)}}">Edit</a> | 
+                <a href="{{url_for('deleteItem', item_name=item.name)}}">Delete</a>
+            </p>
+            {% endif %}
+            </ul>
+            
+        </div>
+    </div>
+    <!-- / row -->
+</div>
+<!-- /.container -->
+{% endblock %}

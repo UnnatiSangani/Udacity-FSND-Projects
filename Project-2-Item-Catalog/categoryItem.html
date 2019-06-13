@@ -1,0 +1,39 @@
+{% extends "index.html" %}
+
+{% block title %}Catalog{% endblock title %}
+
+{% block content %}
+{% include "nav.html" %}
+{% include "flash.html" %}
+
+
+<!-- Page Content -->
+
+<div class="fluid-container">
+            <div class="col-sm-2">
+                <h2>Category</h2>
+                <ul class="list-group">
+                   <li class="list-group-item"> {{ category.name }} </li>
+                   
+                </ul>
+            </div>
+            
+            <div class="col-md-3">
+                <h2>Items</h2>
+                    <ul class="list-group">
+                    
+                    {% for i in items %}
+                        {% if i.category_id == category.id %}
+                        <li class="list-group-item">
+                        <a href="{{url_for('showItemDescription', category_name=category.name, item_name=i.name)}}"> 
+                            {{ i.name }} 
+                        </a>
+                    </li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                
+            </div>
+    </div>
+    <!-- /.container -->
+{% endblock %}

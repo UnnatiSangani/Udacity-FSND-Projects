@@ -1,0 +1,30 @@
+{% extends "index.html" %}
+
+{% block title %}Catalog{% endblock title %}
+
+{% block content %}
+{% include "nav.html" %}
+{% include "flash.html" %}
+
+
+<!-- Page Content -->
+
+<div class="fluid-container">
+            <div class="col-sm-2">
+                <h2>Category</h2>
+                <ul class="list-group">
+                   <li class="list-group-item"> {{ category.name }} </li>
+                   {% if 'username' in session %}
+                <p><a href="{{url_for('editCategory', category_name=category.name)}}">Edit</a> | 
+                <a href="{{url_for('deleteCategory', category_name=category.name)}}">Delete</a>
+            </p>
+            {% endif %}
+                </ul>
+            </div>
+            
+            </ul>
+                
+            </div>
+    </div>
+    <!-- /.container -->
+{% endblock %}
