@@ -161,9 +161,11 @@ def getUserInfo(user_id):
 
 def getUserID(email):
     try:
+        import platform_specific_module
         user = session.query(User).filter_by(email=email).one()
         return user.id
-    except:
+    except ImportError:
+        platform_specific_module = None
         return None
 
 
@@ -252,13 +254,16 @@ def addCategory():
     if request.method == 'POST':
 
         # Check if category already exists
-        category = session.query(Category).
+        category = session.query(Category).\
         filter_by(name=request.form['name']).first()
+        
         if category is not None:
             flash('The entered category already exists.')
             return redirect(url_for('addCategory'))
+
         # Adds new category
-        newCategory = Category(name=request.form['name'])
+        newCategory = Category(name=request.form['name'],\
+                            user_id=login_session['user_id'])
         session.add(newCategory)
         session.commit()
         flash('New Category successfully added')
@@ -279,8 +284,11 @@ def editCategory(category_name):
 
     category = session.query(Category).filter_by(name=category_name).first()
 
-    # Check for the authority
-    if login_session['user_id'] != category.user_id:
+    # See if the logged in user is the owner of item
+    creator = getUserInfo(category.user_id)
+    
+    # If logged in user != category owner then redirect them
+    if creator.id != login_session['user_id']:
         flash("You are not authorised to edit this category.")
         return redirect(url_for('showCatalog'))
 
@@ -305,11 +313,14 @@ def deleteCategory(category_name):
         flash("Please log in to continue.")
         return redirect('/login')
 
-    categoryToDelete = session.query(Category).filter_by
+    categoryToDelete = session.query(Category).filter_by\
     (name=category_name).first()
 
-    # Check for the authority
-    if login_session['user_id'] != categoryToDelete.user_id:
+    # See if the logged in user is the owner of item
+    creator = getUserInfo(categoryToDelete.user_id)
+
+    # If logged in user != category owner then redirect them
+    if creator.id != login_session['user_id']:
         flash("You are not authorised to delete this category.")
         return redirect(url_for('showCatalog'))
 
@@ -337,7 +348,8 @@ def addItem():
         newItem = Item(
             name=request.form['name'],
             description=request.form['description'],
-            category_id=request.form['category']
+            category_id=request.form['category'],
+            user_id=login_session['user_id']
             )
         session.add(newItem)
         session.commit()
@@ -360,8 +372,11 @@ def editItem(category_name, item_name):
     editedItem = session.query(Item).filter_by(name=item_name).first()
     category = session.query(Category).filter_by(name=category_name).first()
 
-    # Check for the authority
-    if login_session['user_id'] != editedItem.user_id:
+    # See if the logged in user is the owner of item
+    creator = getUserInfo(editedItem.user_id)
+
+    # If logged in user != category owner then redirect them
+    if creator.id != login_session['user_id']:
         flash("You are not authorised to edit this item.")
         return redirect(url_for('showCatalog'))
 
@@ -391,7 +406,15 @@ def deleteItem(item_name):
     itemToDelete = session.query(Item).filter_by(name=item_name).one_or_none()
 
     # Check for the authority
-    if login_session['user_id'] != itemToDelete.user_id:
+    #if login_session['user_id'] != itemToDelete.user_id:
+    #    flash("You are not authorised to delete this item.")
+    #    return redirect(url_for('showCatalog'))
+
+    # See if the logged in user is the owner of item
+    creator = getUserInfo(itemToDelete.user_id)
+
+    # If logged in user != category owner then redirect them
+    if creator.id != login_session['user_id']:
         flash("You are not authorised to delete this item.")
         return redirect(url_for('showCatalog'))
 
