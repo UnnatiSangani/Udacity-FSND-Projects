@@ -32,8 +32,7 @@ Follow the official documentation:
 
 - Check if the current timezone is set to UTC using:
 
-```$ date
-```
+`$ date`
 
 - If not UTC set timezone to UTC using the command below:
 
