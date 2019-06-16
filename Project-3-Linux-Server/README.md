@@ -31,11 +31,16 @@ Follow the official documentation:
 - Set timezone to UTC
 
 - Check if the current timezone is set to UTC using:
-`$ date`
+
+```python
+$ date
+```
 
 - If not UTC set timezone to UTC using the command below:
 
-`sudo dpkg-reconfigure tzdata`
+```python
+sudo dpkg-reconfigure tzdata
+```
 
 select 'None of the above' from the menu and then select 'UTC'.
 
@@ -51,18 +56,15 @@ select 'None of the above' from the menu and then select 'UTC'.
 
 - Edit the sudoers.d file
 
-``` sudo nano /etc/sudoers.d/grader
-```
+`sudo nano /etc/sudoers.d/grader`
 
 - Add the following line into file
 
-```grader ALL=(ALL:ALL) ALL
-```
+`grader ALL=(ALL:ALL) ALL`
 
 - Try to run the command
 
-```sudo cat /etc/passwd
-```
+`sudo cat /etc/passwd`
 
 Should display the content
 
@@ -78,8 +80,7 @@ nano .ssh/authorized_keys
 
 - Now go to LOCAL TERMINAL and generate ssh keypair
 
-```ssh-keygen
-```
+`ssh-keygen`
 
 This command will generate 2 files, public key `fsnd_linux.pub` and private key `fsnd_linux.rsa`.
 
@@ -97,15 +98,13 @@ chmod 644 .ssh/authorized_keys
 
 - On LOCAL machine, use the PRIVATE key `fsnd_linux.rsa` (created with ssh-keygen command) to connect to REMOTE MACHINE
 
-```ssh grader@52.221.180.192 -p 2200 -i ~/FSND-Project-Linux-Server/.ssh/fsnd_linux
-```
+`ssh grader@52.221.180.192 -p 2200 -i ~/FSND-Project-Linux-Server/.ssh/fsnd_linux`
 
 ## SSH Configurations
 
 - Run the following command
 
-```sudo nano /etc/ssh/sshd_config
-```
+`sudo nano /etc/ssh/sshd_config`
 
 - Change the SSH default port by locating the following line and change 22 to 2200:
 
@@ -127,8 +126,7 @@ PasswordAuthentication yes
 
 - Restart the ssh service for the changes to take effect:
 
-```sudo service ssh restart
-```
+`sudo service ssh restart`
 
 Now we can login without using password from our local machine.
 
@@ -149,35 +147,29 @@ sudo ufw allow 123
 
 - Enable Firewall:
 
-```sudo ufw enable
-```
+`sudo ufw enable`
 
 - Check firewall status
 
-```sudo ufw status numbered
-```
+`sudo ufw status numbered`
 
 ## Package Installation
 
 - Install apache2 package:
 
-```sudo apt-get install apache2
-```
+`sudo apt-get install apache2`
 
 - Install mod_wsgi package:
 
-```sudo apt-get install libapache2-mod-wsgi
-```
+`sudo apt-get install libapache2-mod-wsgi`
 
 - Install postgresql package:
 
-```sudo apt-get install postgresql
-```
+`sudo apt-get install postgresql`
 
 - Install git package:
 
-```sudo apt-get install git
-```
+`sudo apt-get install git`
 
 - Install python packages:
 
@@ -195,33 +187,27 @@ sudo ufw allow 123
 
 - Ensure access method is updated from peer to md5.
 
-```sudo nano /etc/postgresql/9.3/main/pg_hba.conf
-```
+`sudo nano /etc/postgresql/9.3/main/pg_hba.conf`
 
 - Restart postgres server
   
-```sudo service postgresql restart
-```
+`sudo service postgresql restart`
 
 - Login as user postgres into shell
   
-```sudo su - postgres psql
-```
+`sudo su - postgres psql`
 
 - Create a new database named catalog by using postgreSQL shell:
 
-```postgres=# CREATE DATABASE catalog;
-```
+`postgres=# CREATE DATABASE catalog;`
 
 - Create a new user named catalog
 
-```postgres=# CREATE USER catalog;
-```
+`postgres=# CREATE USER catalog;`
 
 - Set a password for user catalog:
 
-```postgres=# ALTER ROLE userdb WITH PASSWORD 'catalog';
-```
+`postgres=# ALTER ROLE userdb WITH PASSWORD 'catalog';`
 
 - Give user "catalog" permission to "catalog" database:
 
@@ -240,52 +226,45 @@ exit
 
 - Move to /var/www directory
   
- ```cd /var/www
- ```
+ `cd /var/www`
 
 - Create the application directory
 
-```sudo mkdir FlaskApp
-```
+`sudo mkdir FlaskApp`
 
 - Move inside the directory FlaskApp and clone the project repository
 
-``` git clone (https://github.com/UnnatiSangani/Udacity-FSND-Projects)
-```
+`git clone (https://github.com/UnnatiSangani/Udacity-FSND-Projects)`
 
 - Rename the project's name and ensure all files are under directory /var/www/FlaskApp. Remove unwwanted files
 
-```sudo mv ./Project-2-Item-Catalog ./FlaskApp
-```
+`sudo mv ./Project-2-Item-Catalog ./FlaskApp`
 
 - Changing permissions of files
 
-```sudo chmod -R 777 *
-```
+`sudo chmod -R 777 *`
 
 - Move to the inner FlaskApp directory
 
 - Rename application.py to __init__.py using
 
-```sudo mv application.py __init__.py
-```
+`sudo mv application.py __init__.py`
 
 - Edit database_setup.py, data_addition.py files and change the following line to change the engine
 
-```engine = create_engine('sqlite:///items_catalog.db') to engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
+```engine = create_engine('sqlite:///items_catalog.db') to
+engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
 ```
 
 - Create database schema
 
-```sudo python database_setup.py
-```
+`sudo python database_setup.py`
 
 ## Configure and Enable a New Virtual Host
 
 - Create FlaskApp.conf to edit:
 
-```sudo nano /etc/apache2/sites-available/FlaskApp.conf
-```
+`sudo nano /etc/apache2/sites-available/FlaskApp.conf`
 
 - Add the following lines of code to the file to configure the virtual host:
 
@@ -312,13 +291,11 @@ exit
 
 - Enable the virtual host:
 
-```sudo a2ensite FlaskApp.conf
-```
+`sudo a2ensite FlaskApp.conf`
 
 - Disable default host:
 
-```sudo a2dissite 000-default.conf
-```
+`sudo a2dissite 000-default.conf`
 
 ## Create the .wsgi File
 
@@ -342,8 +319,7 @@ application.secret_key = 'Add your secret key'
 
 ## Restart Apache
 
-```sudo service apache2 restart
-```
+`sudo service apache2 restart`
 
 ## References
 
