@@ -18,10 +18,10 @@ Project is developed as part of Udacity's Full Stack Web Developer Nanodegree co
 
 2. Update the operating system pakages and reboot if required
 
-```$ sudo apt-get update
-$ sudo apt-get upgrade
-$ sudo apt-get dist-upgrade
-$ sudo reboot
+```sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
+sudo reboot
 ```
 
 3. Configure automatic security and critical updates
@@ -35,24 +35,24 @@ Check if the current timezone is set to UTC using:
 
 If not UTC set timezone to UTC using the command below:
 
-```$ sudo dpkg-reconfigure tzdata
+```sudo dpkg-reconfigure tzdata
 ```
 
 select 'None of the above' from the menu and then select 'UTC'.
 
 5. Create user grader
 
-```$ sudo adduser grader
+```sudo adduser grader
 ```
 
 6. Add user into sudoers list
 
-``` $ sudo cp /etc/sudoers.d /etc/sudoers.d/grader
+```sudo cp /etc/sudoers.d /etc/sudoers.d/grader
 ```
 
 - Edit the sudoers.d file
 
-```$ sudo nano /etc/sudoers.d/grader
+``` sudo nano /etc/sudoers.d/grader
 ```
 
 - Add the following line into file
@@ -62,7 +62,7 @@ select 'None of the above' from the menu and then select 'UTC'.
 
 - Try to run the command
 
-```$ sudo cat /etc/passwd
+```sudo cat /etc/passwd
 ```
 
 Should display the content
@@ -71,15 +71,15 @@ Should display the content
 
 - Connect to REMOTE MACHINE using the ubuntu user
 
-```$ su - grader
-$ mkdir .ssh
-$ touch .ssh/authorized_keys
-$ nano .ssh/authorized_keys
+```su - grader
+mkdir .ssh
+touch .ssh/authorized_keys
+nano .ssh/authorized_keys
 ```
 
 - Now go to LOCAL TERMINAL and generate ssh keypair
 
-```$ ssh-keygen
+```ssh-keygen
 ```
 
 This command will generate 2 files, public key `fsnd_linux.pub` and private key `fsnd_linux.rsa`.
@@ -92,8 +92,8 @@ This command will generate 2 files, public key `fsnd_linux.pub` and private key 
 
 8. On REMOTE machine, perform the following commands (as a ubuntu user)
 
-```$ chmod 700 .ssh
-$ chmod 644 .ssh/authorized_keys
+```chmod 700 .ssh
+chmod 644 .ssh/authorized_keys
 ```
 
 9. On LOCAL machine, use the PRIVATE key `fsnd_linux.rsa` (created with ssh-keygen command) to connect to REMOTE MACHINE
@@ -105,7 +105,7 @@ $ chmod 644 .ssh/authorized_keys
 
 - Run the following command:
 
-```$sudo nano /etc/ssh/sshd_config
+```sudo nano /etc/ssh/sshd_config
 ```
 
 - Change the SSH default port by locating the following line and change 22 to 2200:
@@ -137,66 +137,66 @@ Now we can login without using password from our local machine.
 
 - Set UFW defaults:
 
-```$ sudo ufw default deny incoming
-$ sudo ufw default allow outgoing
+```sudo ufw default deny incoming
+sudo ufw default allow outgoing
 ```
 
 - Allow connections for SSH (port 2200), HTTP (port 80), and UDP (port 123):
 
-```$ sudo ufw allow 2200
-$ sudo ufw allow 80
-$ sudo ufw allow 123
+```sudo ufw allow 2200
+sudo ufw allow 80
+sudo ufw allow 123
 ```
 
 - Enable Firewall:
 
-```$ sudo ufw enable
+```sudo ufw enable
 ```
 
 - Check firewall status
 
-```$ sudo ufw status numbered
+```sudo ufw status numbered
 ```
 
 12. Package Installation
 
 - Install apache2 package:
 
-```$ sudo apt-get install apache2
+```sudo apt-get install apache2
 ```
 
 - Install mod_wsgi package:
 
-```$ sudo apt-get install libapache2-mod-wsgi
+```sudo apt-get install libapache2-mod-wsgi
 ```
 
 - Install postgresql package:
 
-```$ sudo apt-get install postgresql
+```sudo apt-get install postgresql
 ```
 
 - Install git package:
 
-``` $ sudo apt-get install git
+```sudo apt-get install git
 ```
 
 - Install python packages:
 
-```$ sudo apt-get -qqy install python python-pip
-$ sudo pip2 install --upgrade pip
-$ sudo pip2 install flask packaging oauth2client redis passlib flask-httpauth
-$ sudo pip2 install sqlalchemy flask-sqlalchemy psycopg2-binary bleach requests
-$ sudo apt-get install python-oauth2client
-$ sudo apt-get install python-httplib2
-$ sudo apt-get install python-psycopg2 python-flask
-$ sudo apt-get install python-sqlalchemy python-pip
+```sudo apt-get -qqy install python python-pip
+ sudo pip2 install --upgrade pip
+ sudo pip2 install flask packaging oauth2client redis passlib flask-httpauth
+ sudo pip2 install sqlalchemy flask-sqlalchemy psycopg2-binary bleach requests
+ sudo apt-get install python-oauth2client
+ sudo apt-get install python-httplib2
+ sudo apt-get install python-psycopg2 python-flask
+ sudo apt-get install python-sqlalchemy python-pip
 ```
 
 13. PostgreSql Congigurations
 
 - Ensure access method is updated from peer to md5.
 
-```$ sudo nano /etc/postgresql/9.3/main/pg_hba.conf
+```sudo nano /etc/postgresql/9.3/main/pg_hba.conf
 ```
 
 - Restart postgres server
@@ -206,7 +206,7 @@ $ sudo apt-get install python-sqlalchemy python-pip
 
 - Login as user postgres into shell
   
-```$ sudo su - postgres psql
+```sudo su - postgres psql
 ```
 
 - Create a new database named catalog by using postgreSQL shell:
@@ -241,12 +241,12 @@ exit
 
 - Move to /var/www directory
   
- ```$ cd /var/www
+ ```cd /var/www
  ```
 
 - Create the application directory
 
-```$ sudo mkdir FlaskApp
+```sudo mkdir FlaskApp
 ```
 
 - Move inside the directory FlaskApp and clone the project repository
@@ -273,12 +273,12 @@ exit
 
 - Edit database_setup.py, data_addition.py files and change the following line to change the engine
 
-``` engine = create_engine('sqlite:///items_catalog.db') to engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
+```engine = create_engine('sqlite:///items_catalog.db') to engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
 ```
 
 - Create database schema
 
-```$ sudo python database_setup.py
+```sudo python database_setup.py
 ```
 
 15. Configure and Enable a New Virtual Host
@@ -325,7 +325,7 @@ exit
 
 - Create the .wsgi File under /var/www/FlaskApp:
 
-```$ cd /var/www/FlaskApp
+```cd /var/www/FlaskApp
 sudo vi flaskapp.wsgi
 ```
 
@@ -343,7 +343,7 @@ application.secret_key = 'Add your secret key'
 
 17. Restart Apache
 
-```$ sudo service apache2 restart
+```sudo service apache2 restart
 ```
 
 ## References
