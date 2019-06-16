@@ -25,15 +25,17 @@ sudo reboot
 ```
 
 3. Configure automatic security and critical updates
-Follow the official documentation: [Ubuntu Automatic Update Configuration] (https://help.ubuntu.com/lts/serverguide/automatic-updates.html.en)
+Follow the official documentation:
+[Ubuntu Automatic Update Configuration] (https://help.ubuntu.com/lts/serverguide/automatic-updates.html.en)
 
 4. Set timezone to UTC
-Check if the current timezone is set to UTC using:
+
+- Check if the current timezone is set to UTC using:
 
 ```$ date
 ```
 
-If not UTC set timezone to UTC using the command below:
+- If not UTC set timezone to UTC using the command below:
 
 ```sudo dpkg-reconfigure tzdata
 ```
