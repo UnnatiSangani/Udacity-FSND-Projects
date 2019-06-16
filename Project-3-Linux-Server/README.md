@@ -6,7 +6,7 @@ Project is developed as part of Udacity's Full Stack Web Developer Nanodegree co
 
 # Server Details:
 
-- Public IP Address: http://52.221.180.192/
+- Public IP Address: (http://52.221.180.192/)
 - Virtual Server: Amazon Lightsail Instance
 - Operating System: Ubuntu 16.04 LTS
 - SSH Port: 2200 (Only Key based logins supported)
@@ -18,8 +18,7 @@ Project is developed as part of Udacity's Full Stack Web Developer Nanodegree co
 
 2. Update the operating system pakages and reboot if required
 
-```
-$ sudo apt-get update
+```$ sudo apt-get update
 $ sudo apt-get upgrade
 $ sudo apt-get dist-upgrade
 $ sudo reboot
@@ -351,6 +350,5 @@ application.secret_key = 'Add your secret key'
 
 - (https://www.thegeekstuff.com/2009/04/linux-postgresql-install-and-configure-from-source/)
 - (https://help.ubuntu.com/lts/serverguide/automatic-updates.html.en)
-- (https://www.ssh.com/ssh/copy-id)
 - (https://help.ubuntu.com/community/SSH/OpenSSH/Keys)
 - (https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps
