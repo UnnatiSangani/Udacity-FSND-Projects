@@ -12,11 +12,11 @@ Project is developed as part of Udacity's Full Stack Web Developer Nanodegree co
 - SSH Port: 2200 (Only Key based logins supported)
 - Web Server: Apache2 Web Server
 
-# Project Deployment Steps:
+## Prepare the REMOTE SERVER:
 
-1. Login to the server as user ubuntu using ssh connection
+- Login to the server as user ubuntu using ssh connection
 
-2. Update the operating system pakages and reboot if required
+- Update the operating system pakages and reboot if required
 
 ```sudo apt-get update
 sudo apt-get upgrade
@@ -24,32 +24,30 @@ sudo apt-get dist-upgrade
 sudo reboot
 ```
 
-3. Configure automatic security and critical updates
+- Configure automatic security and critical updates
 Follow the official documentation:
 [Ubuntu Automatic Update Configuration] (https://help.ubuntu.com/lts/serverguide/automatic-updates.html.en)
 
-4. Set timezone to UTC
+- Set timezone to UTC
 
 - Check if the current timezone is set to UTC using:
-
 `$ date`
 
 - If not UTC set timezone to UTC using the command below:
 
-```sudo dpkg-reconfigure tzdata
-```
+`sudo dpkg-reconfigure tzdata`
 
 select 'None of the above' from the menu and then select 'UTC'.
 
-5. Create user grader
+## User Creation
 
-```sudo adduser grader
-```
+- Create user grader
 
-6. Add user into sudoers list
+`sudo adduser grader`
 
-```sudo cp /etc/sudoers.d /etc/sudoers.d/grader
-```
+- Add user into sudoers list
+
+`sudo cp /etc/sudoers.d /etc/sudoers.d/grader`
 
 - Edit the sudoers.d file
 
@@ -68,7 +66,7 @@ select 'None of the above' from the menu and then select 'UTC'.
 
 Should display the content
 
-7. Create SSH Keypairs for users
+## Create SSH Keypairs for users
 
 - Connect to REMOTE MACHINE using the ubuntu user
 
@@ -91,20 +89,20 @@ This command will generate 2 files, public key `fsnd_linux.pub` and private key 
 - Paste the .pub content in the file (authorized_key)
 - Save the file and close it
 
-8. On REMOTE machine, perform the following commands (as a ubuntu user)
+- On REMOTE machine, perform the following commands (as a ubuntu user)
 
 ```chmod 700 .ssh
 chmod 644 .ssh/authorized_keys
 ```
 
-9. On LOCAL machine, use the PRIVATE key `fsnd_linux.rsa` (created with ssh-keygen command) to connect to REMOTE MACHINE
+- On LOCAL machine, use the PRIVATE key `fsnd_linux.rsa` (created with ssh-keygen command) to connect to REMOTE MACHINE
 
 ```ssh grader@52.221.180.192 -p 2200 -i ~/FSND-Project-Linux-Server/.ssh/fsnd_linux
 ```
 
-10. SSH Configurations
+## SSH Configurations
 
-- Run the following command:
+- Run the following command
 
 ```sudo nano /etc/ssh/sshd_config
 ```
@@ -134,7 +132,7 @@ PasswordAuthentication yes
 
 Now we can login without using password from our local machine.
 
-11. Configure firewall to allow SSH, port 80, 123 and 2200
+## Configure firewall to allow SSH, port 80, 123 and 2200
 
 - Set UFW defaults:
 
@@ -159,7 +157,7 @@ sudo ufw allow 123
 ```sudo ufw status numbered
 ```
 
-12. Package Installation
+## Package Installation
 
 - Install apache2 package:
 
@@ -193,7 +191,7 @@ sudo ufw allow 123
  sudo apt-get install python-sqlalchemy python-pip
 ```
 
-13. PostgreSql Congigurations
+## PostgreSql Congigurations
 
 - Ensure access method is updated from peer to md5.
 
@@ -238,7 +236,7 @@ postgres=# REVOKE ALL ON SCHEMA PUBLIC FROM PUBLIC;
 exit
 ```
 
-14. Clone and setup Catalog App project.
+## Clone and setup Catalog App project.
 
 - Move to /var/www directory
   
@@ -282,7 +280,7 @@ exit
 ```sudo python database_setup.py
 ```
 
-15. Configure and Enable a New Virtual Host
+## Configure and Enable a New Virtual Host
 
 - Create FlaskApp.conf to edit:
 
@@ -322,7 +320,7 @@ exit
 ```sudo a2dissite 000-default.conf
 ```
 
-16. Create the .wsgi File
+## Create the .wsgi File
 
 - Create the .wsgi File under /var/www/FlaskApp:
 
@@ -342,7 +340,7 @@ from FlaskApp import app as application
 application.secret_key = 'Add your secret key'
 ```
 
-17. Restart Apache
+## Restart Apache
 
 ```sudo service apache2 restart
 ```
