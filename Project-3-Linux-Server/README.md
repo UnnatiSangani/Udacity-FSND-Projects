@@ -115,13 +115,13 @@ Port 22
 - Remove root login by locating the following line and change without-password to no:
 
 ```# Authentication:
-PermitRootLogin without-password
+PermitRootLogin prohibit-password
 ```
 
 - Force SSH login by locating the following line and change yes to no:
 
 ```# Change to no to disable tunnelled clear text passwords
-PasswordAuthentication yes
+PasswordAuthentication no
 ```
 
 - Restart the ssh service for the changes to take effect:
