@@ -27,15 +27,15 @@ Project is developed as part of Udacity's Full Stack Web Developer Nanodegree co
 ## Steps to deply the project on server
 
 1. [Prepare the remote server](#Prepare-the-remote-server)
-2. [Configure the Firewall] (# Configure firewall to allow SSH, port 80, 123 and 2200 )
-3. [Create the User - grader] (# User Creation)
-4. [Generate the SSH Keypair and set-up](# Generate SSH Keypairs for users)
-5. [SSH Configurations] (# SSH Configurations)
-6. [Software package installation] (# Package Installation)
-7. [PostgreSQL configuration] (# PostgreSql Congigurations)
-8. [Set up the project] (# Clone and setup Catalog App project)
-9. [Enable the virtual host to run the project] (# Configure and Enable a New Virtual Host)
-10. [Restart the server and run the project] (# Restart Apache)
+2. [Configure the Firewall](#Configure-firewall-to-allow-SSH,-port-80,-123-and-2200 )
+3. [Create the User - grader](#User-Creation)
+4. [Generate the SSH Keypair and set-up](#Generate-SSH-Keypairs-for-users)
+5. [SSH Configurations](#SSH-Configurations)
+6. [Software package installation](#Package-Installation)
+7. [PostgreSQL configuration](#PostgreSql-Congigurations)
+8. [Set up the project](#Clone-and-setup-Catalog-App-project)
+9. [Enable the virtual host to run the project](#Configure-and-Enable-a-New-Virtual-Host)
+10. [Restart the server and run the project](#Restart-Apache)
 
 ### Prepare the REMOTE SERVER
 
