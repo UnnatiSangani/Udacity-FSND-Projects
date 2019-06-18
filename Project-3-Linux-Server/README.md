@@ -4,7 +4,7 @@ Objective of this project is to configure linux virtual machine to support Sport
 
 Project is developed as part of Udacity's Full Stack Web Developer Nanodegree courses Configuring Linux Web Servers.
 
-# Server Details:
+## Server Information
 
 - Public IP Address: (http://52.221.180.192/)
 - Virtual Server: Amazon Lightsail Instance
@@ -12,7 +12,32 @@ Project is developed as part of Udacity's Full Stack Web Developer Nanodegree co
 - SSH Port: 2200 (Only Key based logins supported)
 - Web Server: Apache2 Web Server
 
-## Prepare the REMOTE SERVER:
+## Software Installed
+
+- Git 2.7.4
+- Python: 2.7.12
+- PostgreSQL: 9.5.8
+- Flask: 1.0.3
+- SQLAlchemy 1.3.4
+- bleach 3.1.0
+- google-auth 1.6.2
+- psycopg2-binary 2.8.3
+- requests 2.22.0
+
+## Steps to deply the project on server
+
+1. [Prepare the remote server] (# Prepare the REMOTE SERVER)
+2. [Configure the Firewall] (# Configure firewall to allow SSH, port 80, 123 and 2200 )
+3. [Create the User - grader] (# User Creation)
+4. [Generate the SSH Keypair and set-up](# Generate SSH Keypairs for users)
+5. [SSH Configurations] (# SSH Configurations)
+6. [Software package installation] (# Package Installation)
+7. [PostgreSQL configuration] (# PostgreSql Congigurations)
+8. [Set up the project] (# Clone and setup Catalog App project)
+9. [Enable the virtual host to run the project] (# Configure and Enable a New Virtual Host)
+10. [Restart the server and run the project] (# Restart Apache)
+
+### Prepare the REMOTE SERVER
 
 - Login to the server as user ubuntu using ssh connection
 
@@ -32,21 +57,44 @@ Follow the official documentation:
 
 - Check if the current timezone is set to UTC using:
 
-```python
-$ date
-```
+`$ date`
 
 - If not UTC set timezone to UTC using the command below:
 
-```python
-sudo dpkg-reconfigure tzdata
-```
+`sudo dpkg-reconfigure tzdata`
 
 select 'None of the above' from the menu and then select 'UTC'.
 
-## User Creation
+### Configure firewall to allow SSH, port 80, 123 and 2200
 
-- Create user grader
+- Set UFW defaults:
+
+```sudo ufw default deny incoming
+sudo ufw default allow outgoing
+```
+
+- Allow connections for SSH (port 2200), HTTP (port 80), and UDP (port 123):
+
+```sudo ufw allow 2200
+sudo ufw allow 80
+sudo ufw allow 123
+```
+
+- Deny the port 22
+
+`sudo ufw deny 22`
+
+- Enable Firewall:
+
+`sudo ufw enable`
+
+- Check firewall status
+
+`sudo ufw status`
+
+### User Creation
+
+- Create user 'grader'
 
 `sudo adduser grader`
 
@@ -68,7 +116,7 @@ select 'None of the above' from the menu and then select 'UTC'.
 
 Should display the content
 
-## Create SSH Keypairs for users
+### Generate SSH Keypairs for user
 
 - Connect to REMOTE MACHINE using the ubuntu user
 
@@ -86,11 +134,11 @@ This command will generate 2 files, public key `fsnd_linux.pub` and private key 
 
 - Save these files in .ssh folder
 - Now open the .pub file and copy the whole file content.
-- Go to the previously opened terminal (your REMOTE MACHINE)
-- Paste the .pub content in the file (authorized_key)
+- Go to the previously opened terminal (on REMOTE MACHINE)
+- Paste the .pub content in the file (in authorized_key file)
 - Save the file and close it
 
-- On REMOTE machine, perform the following commands (as a ubuntu user)
+- On REMOTE machine, perform the following commands to give all permissions (as a ubuntu user)
 
 ```chmod 700 .ssh
 chmod 644 .ssh/authorized_keys
@@ -100,7 +148,7 @@ chmod 644 .ssh/authorized_keys
 
 `ssh grader@52.221.180.192 -p 2200 -i ~/FSND-Project-Linux-Server/.ssh/fsnd_linux`
 
-## SSH Configurations
+### SSH Configurations
 
 - Run the following command
 
@@ -109,13 +157,13 @@ chmod 644 .ssh/authorized_keys
 - Change the SSH default port by locating the following line and change 22 to 2200:
 
 ```# What ports, IPs and protocols we listen for
-Port 22
+Port 2200
 ```
 
 - Remove root login by locating the following line and change without-password to no:
 
 ```# Authentication:
-PermitRootLogin prohibit-password
+PermitRootLogin without-password (or no)
 ```
 
 - Force SSH login by locating the following line and change yes to no:
@@ -128,32 +176,9 @@ PasswordAuthentication no
 
 `sudo service ssh restart`
 
-Now we can login without using password from our local machine.
+Now key based login is enforced
 
-## Configure firewall to allow SSH, port 80, 123 and 2200
-
-- Set UFW defaults:
-
-```sudo ufw default deny incoming
-sudo ufw default allow outgoing
-```
-
-- Allow connections for SSH (port 2200), HTTP (port 80), and UDP (port 123):
-
-```sudo ufw allow 2200
-sudo ufw allow 80
-sudo ufw allow 123
-```
-
-- Enable Firewall:
-
-`sudo ufw enable`
-
-- Check firewall status
-
-`sudo ufw status numbered`
-
-## Package Installation
+### Software Package Installation
 
 - Install apache2 package:
 
@@ -183,11 +208,17 @@ sudo ufw allow 123
  sudo apt-get install python-sqlalchemy python-pip
 ```
 
-## PostgreSql Congigurations
+- Upgrade and update all software packages
+
+```sudo apt-get update
+sudo apt-get dist-upgrade
+```
+
+### PostgreSql Congigurations and Database creation
 
 - Ensure access method is updated from peer to md5.
 
-`sudo nano /etc/postgresql/9.3/main/pg_hba.conf`
+`sudo nano /etc/postgresql/9.5/main/pg_hba.conf`
 
 - Restart postgres server
   
@@ -197,7 +228,7 @@ sudo ufw allow 123
   
 `sudo su - postgres psql`
 
-- Create a new database named catalog by using postgreSQL shell:
+#### Create a new database named catalog by using postgreSQL shell:
 
 `postgres=# CREATE DATABASE catalog;`
 
@@ -218,11 +249,10 @@ postgres=# REVOKE ALL ON SCHEMA PUBLIC FROM PUBLIC;
 
 - Quit and exit postgreSQL:
 
-```postgres=# \q
-exit
-```
+`postgres=# \q`
+`exit`
 
-## Clone and setup Catalog App project.
+### Clone and setup 'Item Catalog App' project files
 
 - Move to /var/www directory
   
@@ -260,7 +290,7 @@ engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
 
 `sudo python database_setup.py`
 
-## Configure and Enable a New Virtual Host
+### Configure and enable a new Virtual Host
 
 - Create FlaskApp.conf to edit:
 
@@ -297,7 +327,7 @@ engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
 
 `sudo a2dissite 000-default.conf`
 
-## Create the .wsgi File
+#### Create the .wsgi File
 
 - Create the .wsgi File under /var/www/FlaskApp:
 
@@ -317,13 +347,13 @@ from FlaskApp import app as application
 application.secret_key = 'Add your secret key'
 ```
 
-## Restart Apache
+### Restart Apache
 
 `sudo service apache2 restart`
 
-## References
+### References
 
 - (https://www.thegeekstuff.com/2009/04/linux-postgresql-install-and-configure-from-source/)
 - (https://help.ubuntu.com/lts/serverguide/automatic-updates.html.en)
 - (https://help.ubuntu.com/community/SSH/OpenSSH/Keys)
-- (https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps
+- (https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
