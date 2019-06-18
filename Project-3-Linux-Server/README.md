@@ -26,7 +26,7 @@ Project is developed as part of Udacity's Full Stack Web Developer Nanodegree co
 
 ## Steps to deply the project on server
 
-1. [Prepare the remote server] (#Prepare the REMOTE SERVER)
+1. [Prepare the remote server](#Prepare the REMOTE SERVER)
 2. [Configure the Firewall] (# Configure firewall to allow SSH, port 80, 123 and 2200 )
 3. [Create the User - grader] (# User Creation)
 4. [Generate the SSH Keypair and set-up](# Generate SSH Keypairs for users)
